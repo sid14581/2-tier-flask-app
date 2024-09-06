@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app-deploy
+  namespace: flask-ns
+  labels:
+    app: flask-app
+    tier: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask-app
+      tier: frontend
+  template:
+    metadata:
+      name: flask-app-pod
+      labels:
+        app: flask-app
+        tier: frontend
+    spec:
+      containers:
+         - name: flask-app-container
+           image: sid716/flask-app:v1.0.1
+           ports:
+             - containerPort: 5000
+           imagePullPolicy: Always
